@@ -26,25 +26,40 @@
 
 class Date:
 
-    def __init__(self, year=2000, month=1, day=1):
-        # если передали строку — разбираем её
-        if isinstance(year, str):
-            parts = year.split('.')
+    def __init__(self, year=None, month=None, day=None,
+                 date_str=None, date=None):
+        #если передали строку — разбираем её
+        if date_str is not None:
+            if not isinstance(date_str, str):
+                raise TypeError
+            parts = date_str.split('.')
             if len(parts) != 3:
                 raise ValueError
             year = int(parts[0])
             month = int(parts[1])
             day = int(parts[2])
 
-        # если передали другую дату — копируем
-        if isinstance(year, Date):
-            month = year.month
-            day = year.day
-            year = year.year
+        #если передали другую дату — копируем
+        elif date is not None:
+            if not isinstance(date, Date):
+                raise TypeError
+            year = date.year
+            month = date.month
+            day = date.day
+
+        #если ничего не передали — дата по умолчанию
+        elif year is None and month is None and day is None:
+            year = 2000
+            month = 1
+            day = 1
+
+        #если числа переданы не полностью — ошибка
+        elif year is None or month is None or day is None:
+            raise ValueError
 
         if not isinstance(year, int) or not isinstance(month, int) \
                 or not isinstance(day, int):
-            raise ValueError
+            raise TypeError
 
         if year < 0 or month < 1 or month > 12 or day < 1:
             raise ValueError
@@ -113,7 +128,7 @@ class Date:
 
     def add_days(self, n):
         if not isinstance(n, int) or n < 0:
-            raise ValueError
+            raise TypeError
 
         year = self.__year
         month = self.__month
@@ -132,7 +147,7 @@ class Date:
 
     def sub_days(self, n):
         if not isinstance(n, int) or n < 0:
-            raise ValueError
+            raise TypeError
 
         year = self.__year
         month = self.__month
@@ -151,9 +166,8 @@ class Date:
 
     def days_between(self, other):
         if not isinstance(other, Date):
-            raise ValueError
+            raise TypeError
 
-        # определяем, какая дата меньше
         if self.before(other):
             small = self
             big = other
@@ -161,7 +175,7 @@ class Date:
             small = other
             big = self
 
-        # от меньшей даты шагаем вперёд, пока не дойдём до большей
+        #от меньшей даты шагаем вперёд, пока не дойдём до большей
         count = 0
         current = Date(small.year, small.month, small.day)
 
@@ -173,14 +187,14 @@ class Date:
 
     def equals(self, other):
         if not isinstance(other, Date):
-            raise ValueError
+            raise TypeError
         return (self.__year == other.year) and \
                (self.__month == other.month) and \
                (self.__day == other.day)
 
     def before(self, other):
         if not isinstance(other, Date):
-            raise ValueError
+            raise TypeError
         if self.__year != other.year:
             return self.__year < other.year
         if self.__month != other.month:
@@ -189,22 +203,22 @@ class Date:
 
     def after(self, other):
         if not isinstance(other, Date):
-            raise ValueError
+            raise TypeError
         return not self.before(other) and not self.equals(other)
 
     def set_year(self, year):
         if not isinstance(year, int) or year < 0:
-            raise ValueError
+            raise TypeError
         self.__year = year
 
     def set_month(self, month):
         if not isinstance(month, int) or month < 1 or month > 12:
-            raise ValueError
+            raise TypeError
         self.__month = month
 
     def set_day(self, day):
         if not isinstance(day, int) or day < 1:
-            raise ValueError
+            raise TypeError
         if day > self.__days_in_month(self.__year, self.__month):
             raise ValueError
         self.__day = day
@@ -215,43 +229,43 @@ def make_date(year=2000, month=1, day=1):
 
 
 if __name__ == '__main__':
-    # Создание числами
+    #создание числами
     d1 = Date(2004, 8, 31)
     d1.display()
 
-    # Создание строкой
-    d2 = Date("2004.02.29")
+    #создание строкой
+    d2 = Date(date_str="2004.02.29")
     d2.display()
 
-    # Создание копией
-    d3 = Date(d2)
+    #создание копией
+    d3 = Date(date=d2)
     d3.display()
 
-    # Ввод с клавиатуры
+    #ввод с клавиатуры
     d4 = Date()
     d4.read("Введите дату в формате год.месяц.день: ")
     d4.display()
 
-    # Високосность
+    #високосность
     print(d1.is_leap())
     print(d2.is_leap())
 
-    # Прибавление / вычитание дней
+    #прибавление / вычитание дней
     d5 = d1.add_days(10)
     d5.display()
 
     d6 = d1.sub_days(10)
     d6.display()
 
-    # Разница между датами
+    #разница между датами
     print(d1.days_between(d2))
 
-    # Сравнения
+    #сравнения
     print(d1.equals(d2))
     print(d1.before(d2))
     print(d1.after(d2))
 
-    # Получение и установка частей
+    #получение и установка частей
     print(d1.year, d1.month, d1.day)
     d1.set_year(2020)
     d1.set_month(2)

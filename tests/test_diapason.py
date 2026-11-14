@@ -7,7 +7,7 @@ def test_diapason_creation():
     assert d.second == 3.7
 
 def test_diapason_invalid_creation():
-    with pytest.raises(ValueError):
+    with pytest.raises(TypeError):
         Diapason("abc", 3.7)
     with pytest.raises(ValueError):
         Diapason(5.0, 2.0)

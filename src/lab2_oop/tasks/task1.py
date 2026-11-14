@@ -30,7 +30,7 @@ class Diapason:
     def __init__(self, first=0.0, second=0.0):
         if not isinstance(first, (int, float)) or \
            not isinstance(second, (int, float)):
-            raise ValueError
+            raise TypeError
 
         if first > second:
             raise ValueError
@@ -46,7 +46,6 @@ class Diapason:
     def second(self):
         return self.__second
 
-    # Чтение границ с клавиатуры
     def read(self, prompt=None):
         line = input() if prompt is None else input(prompt)
         parts = line.split()
@@ -54,11 +53,8 @@ class Diapason:
         if len(parts) != 2:
             raise ValueError
 
-        try:
-            first = float(parts[0])
-            second = float(parts[1])
-        except ValueError:
-            raise ValueError
+        first = float(parts[0])
+        second = float(parts[1])
 
         if first > second:
             raise ValueError
@@ -66,27 +62,17 @@ class Diapason:
         self.__first = first
         self.__second = second
 
-    # Вывод диапазона
     def display(self):
         print(f"[{self.__first}, {self.__second}]")
 
-    # Принадлженость диапазону
     def rangecheck(self, x):
         if not isinstance(x, (int, float)):
-            raise ValueError
+            raise TypeError
 
         return self.__first <= x <= self.__second
 
 
-# Внешняя функция
 def make_diapason(first, second):
-    if not isinstance(first, (int, float)) or \
-       not isinstance(second, (int, float)):
-        raise ValueError
-
-    if first > second:
-        raise ValueError
-
     return Diapason(first, second)
 
 

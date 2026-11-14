@@ -6,10 +6,10 @@ def test_date_creation():
     d1 = Date(2004, 8, 31)
     assert d1.year == 2004 and d1.month == 8 and d1.day == 31
 
-    d2 = Date("2004.02.29")
+    d2 = Date(date_str="2004.02.29")
     assert d2.year == 2004 and d2.month == 2 and d2.day == 29
 
-    d3 = Date(d1)
+    d3 = Date(date=d1)
     assert d3.year == 2004 and d3.month == 8 and d3.day == 31
 
     with pytest.raises(ValueError):
@@ -48,3 +48,4 @@ def test_comparisons():
 
     assert d1.after(d3)
     assert not d3.after(d1)
+    
