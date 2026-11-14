@@ -48,4 +48,3 @@ def test_comparisons():
 
     assert d1.after(d3)
     assert not d3.after(d1)
-    
