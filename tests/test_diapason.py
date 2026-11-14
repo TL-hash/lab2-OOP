@@ -14,11 +14,11 @@ def test_diapason_invalid_creation():
 
 def test_rangecheck():
     d = Diapason(1.5, 3.7)
-    assert d.rangecheck(2.0) is True
-    assert d.rangecheck(1.5) is True
-    assert d.rangecheck(3.7) is True
-    assert d.rangecheck(1.0) is False
-    assert d.rangecheck(4.0) is False
+    assert d.rangecheck(2.0)
+    assert d.rangecheck(1.5)
+    assert d.rangecheck(3.7)
+    assert not d.rangecheck(1.0)
+    assert not d.rangecheck(4.0)
 
 def test_make_diapason():
     d = make_diapason(0.0, 10.0)

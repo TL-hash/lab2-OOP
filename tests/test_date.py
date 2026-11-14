@@ -17,10 +17,10 @@ def test_date_creation():
 
 
 def test_is_leap():
-    assert Date(2000, 1, 1).is_leap() is True
-    assert Date(1900, 1, 1).is_leap() is False
-    assert Date(2004, 1, 1).is_leap() is True
-    assert Date(2003, 1, 1).is_leap() is False
+    assert Date(2000, 1, 1).is_leap()
+    assert not Date(1900, 1, 1).is_leap()
+    assert Date(2004, 1, 1).is_leap()
+    assert not Date(2003, 1, 1).is_leap()
 
 
 def test_add_sub_days():
@@ -40,11 +40,11 @@ def test_comparisons():
     d2 = Date(2004, 8, 31)
     d3 = Date(2004, 8, 30)
 
-    assert d1.equals(d2) is True
-    assert d1.equals(d3) is False
+    assert d1.equals(d2)
+    assert not d1.equals(d3)
 
-    assert d1.before(d3) is False
-    assert d3.before(d1) is True
+    assert not d1.before(d3)
+    assert d3.before(d1)
 
-    assert d1.after(d3) is True
-    assert d3.after(d1) is False
+    assert d1.after(d3)
+    assert not d3.after(d1)
