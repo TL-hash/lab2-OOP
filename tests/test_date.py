@@ -1,5 +1,5 @@
 import pytest
-from tasks.task2 import Date, make_date
+from lab2_oop.tasks.task2 import Date, make_date
 
 
 def test_date_creation():

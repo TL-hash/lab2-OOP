@@ -1,5 +1,5 @@
 import pytest
-from tasks.task1 import Diapason, make_diapason
+from lab2_oop.tasks.task1 import Diapason, make_diapason
 
 def test_diapason_creation():
     d = Diapason(1.5, 3.7)
